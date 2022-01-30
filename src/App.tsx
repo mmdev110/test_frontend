@@ -9,9 +9,10 @@ export type Article = {
     title: string
     text: string
 }
+const obj = { aaa: 'ppp' }
 const App = () => {
     const [articles, setArticles] = useState<Article[]>([])
-    const [errTxt , setErrTxt] = useState("")
+    const [errTxt, setErrTxt] = useState('')
     useEffect(() => {
         //componentDidMount
         apiRequest()
@@ -22,7 +23,7 @@ const App = () => {
             const response = await api('/', 'GET')
             setArticles(response.data.articles)
         } catch (e) {
-            setErrTxt("cannot connect to backend.")
+            setErrTxt('cannot connect to backend.')
             if (axios.isAxiosError(e)) {
                 console.error(e.response)
             }
@@ -33,15 +34,11 @@ const App = () => {
     return (
         <div>
             <h1>TopPage</h1>
-            {errTxt && <div>{errTxt}</div>}
-            {articles.length>0 &&articles.map((article: Article)=>{
-                return(
-                    <div key={article.ID}>
-                    {article.text}
-                </div>
-                )
-
-            })}
+            {errTxt && <div style={{ color: 'red' }}>Error: {errTxt}</div>}
+            {articles.length > 0 &&
+                articles.map((article: Article) => {
+                    return <div key={article.ID}>{article.text}</div>
+                })}
         </div>
     )
 }
